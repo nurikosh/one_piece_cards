@@ -10,7 +10,7 @@ def find_cards_with_shared_factions(deck, card_name):
     target_card = next((card for card in deck.cards if card.name == card_name), None)
 
     if not target_card:
-        print(f"Card '{card_name}' not found in the deck.")
+        print(f"Card '{card_name}' not found in the deck!")
         return
 
     matching_cards = []
