@@ -149,6 +149,11 @@ def play_turn(attacker, defender, table, deck):
             defender.hand.extend([card for pair in table for card in pair if card])
             table[:] = initialize_table()  # Очистка стола
             print(f"{defender.name} passes and takes all cards from the table.")
+            
+            # Проверка на победу
+            if not attacker.hand:
+                print(f"{attacker.name} wins!")
+                return True  # Атакующий выигрывает
             return False  # Возвращаем False, чтобы роли игроков не менялись
         else:
             defense_indices = [int(index) - 1 for index in defense_input.split()]
@@ -158,10 +163,14 @@ def play_turn(attacker, defender, table, deck):
 
             defense_cards = [defender.hand[index] for index in defense_indices]
 
-            # Проверка, что все карты защиты могут покрыть карты атаки
+            # Проверка, что каждая карта защиты может покрыть соответствующую карту атаки
+            if len(defense_cards) != len(attack_cards):
+                print("You must cover all attack cards or take the cards from the table.")
+                continue
+
             valid_defense = True
-            for i, (attack_card, defense_card) in enumerate(zip(attack_cards, defense_cards)):
-                if defense_card.rank < attack_card.rank:
+            for attack_card, defense_card in zip(attack_cards, defense_cards):
+                if defense_card.rank <= attack_card.rank:
                     print("Вы не можете покрыть этой картой, выберите другую карту или возьмите карты со стола.")
                     valid_defense = False
                     break
@@ -199,7 +208,7 @@ def play_turn(attacker, defender, table, deck):
         else:
             print("Invalid input. Please enter 'f' to finish your turn.")
 
-    # Проверка на победу
+    # Проверка на победу после успешной защиты
     if not attacker.hand:
         print(f"{attacker.name} wins!")
         return True
