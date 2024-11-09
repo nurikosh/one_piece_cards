@@ -101,10 +101,15 @@ def play_turn(attacker, defender, table, deck):
             print(f"{i + 1}: {card}")
 
         # Выбор карт для атаки
-        attack_indices = input("Select the card numbers to attack (separated by space) or 'f' to finish: ").split()
+        attack_indices = input("Select the card numbers to attack (separated by space) or 'f' to finish(if not your 1 turn): ").split()
         
         if 'f' in attack_indices:
-            break  # Завершение атакующего хода
+            # Проверяем, есть ли карты на столе
+            if any(pair[0] is not None for pair in table):
+                break  # Завершаем ход только если есть хотя бы одна карта на столе
+            else:
+                print("You must play at least one card!")
+                continue
 
         attack_indices = [int(index) - 1 for index in attack_indices]
 
