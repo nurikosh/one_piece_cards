@@ -1,0 +1,270 @@
+Players and their hands:
+Player: Player 1
+  Hand: [Winsmoke Sanji, Benn Beckman, Prime Monkey D Garp, Mr2 Bentham, God Enel, Boa Hancock]
+Player: Player 2
+  Hand: [Soul King Brook, Killer, Aokiji, Rockstar, Marguerite, Akainu]
+
+Первым ходит Player 2
+
+Player 2's turn to attack.
+Player 2's hand:
+1: Card: Soul King Brook, Rank: 70, Factions: Straw Hat Pirates
+2: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+3: Card: Aokiji, Rank: 92, Factions: Marines
+4: Card: Rockstar, Rank: 65, Factions: Red Hair Pirates
+5: Card: Marguerite, Rank: 59, Factions: Kuja Pirates
+6: Card: Akainu, Rank: 94, Factions: Marines
+Select the card numbers to attack (separated by space) or 'f' to finish: f
+You must play at least one card!   # тест на проверку того что нельзя закончить ход без хода
+Player 2's hand:
+1: Card: Soul King Brook, Rank: 70, Factions: Straw Hat Pirates
+2: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+3: Card: Aokiji, Rank: 92, Factions: Marines
+4: Card: Rockstar, Rank: 65, Factions: Red Hair Pirates
+5: Card: Marguerite, Rank: 59, Factions: Kuja Pirates
+6: Card: Akainu, Rank: 94, Factions: Marines
+Select the card numbers to attack (separated by space) or 'f' to finish: 1
+Table now: (Soul King Brook, None) | (None, None) | (None, None) | (None, None) | (None, None) | (None, None)       
+Active factions: 12
+
+Player 1's hand:
+1: Card: Winsmoke Sanji, Rank: 82, Factions: Baratie crew, Straw Hat Pirates
+2: Card: Benn Beckman, Rank: 89, Factions: Red Hair Pirates
+3: Card: Prime Monkey D Garp, Rank: 100, Factions: Adopted and Honorary, Marines, Monkey family
+4: Card: Mr2 Bentham, Rank: 60, Factions: Baroque Works
+5: Card: God Enel, Rank: 75, Factions: Skypiea
+6: Card: Boa Hancock, Rank: 83, Factions: Shichibukai, Kuja Pirates
+Enter 'p' to pass or select the card numbers to defend (separated by space):
+Select the card numbers or 'p': 6
+Table now: (Soul King Brook, Boa Hancock) | (None, None) | (None, None) | (None, None) | (None, None) | (None, None)
+Active factions: 13, 12, 4
+Player 2's hand:
+1: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+2: Card: Aokiji, Rank: 92, Factions: Marines
+3: Card: Rockstar, Rank: 65, Factions: Red Hair Pirates
+4: Card: Marguerite, Rank: 59, Factions: Kuja Pirates
+5: Card: Akainu, Rank: 94, Factions: Marines
+Select the card numbers to attack (separated by space) or 'f' to finish: 2
+Card must share at least one faction with active factions on the table. # проверка на то что нельзя атаковать картой не имеющей фракции с активными фракциями на столе
+Player 2's hand:
+1: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+2: Card: Aokiji, Rank: 92, Factions: Marines
+3: Card: Rockstar, Rank: 65, Factions: Red Hair Pirates
+4: Card: Marguerite, Rank: 59, Factions: Kuja Pirates
+5: Card: Akainu, Rank: 94, Factions: Marines
+Select the card numbers to attack (separated by space) or 'f' to finish: 4
+Table now: (Soul King Brook, Boa Hancock) | (Marguerite, None) | (None, None) | (None, None) | (None, None) | (None, None)
+Active factions: 13 # верно работает то что, маргарет использовав 13 фракцию, оставляет ее в активных, и убирает 4, которая относилась к карте boa hancock, но не верно
+# что убирается фракция 12, которая относится к карте soul king brook
+
+Player 1's hand:
+1: Card: Winsmoke Sanji, Rank: 82, Factions: Baratie crew, Straw Hat Pirates
+2: Card: Benn Beckman, Rank: 89, Factions: Red Hair Pirates
+3: Card: Prime Monkey D Garp, Rank: 100, Factions: Adopted and Honorary, Marines, Monkey family
+4: Card: Mr2 Bentham, Rank: 60, Factions: Baroque Works
+5: Card: God Enel, Rank: 75, Factions: Skypiea
+Enter 'p' to pass or select the card numbers to defend (separated by space):
+Select the card numbers or 'p': 4
+Table now: (Soul King Brook, Boa Hancock) | (Marguerite, Mr2 Bentham) | (None, None) | (None, None) | (None, None) | (None, None)
+Active factions: 13, 14
+Player 2's hand:
+1: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+2: Card: Aokiji, Rank: 92, Factions: Marines
+3: Card: Rockstar, Rank: 65, Factions: Red Hair Pirates
+4: Card: Akainu, Rank: 94, Factions: Marines
+Select the card numbers to attack (separated by space) or 'f' to finish: f
+
+Player 1's turn to attack.
+Player 1's hand:
+1: Card: Winsmoke Sanji, Rank: 82, Factions: Baratie crew, Straw Hat Pirates
+2: Card: Benn Beckman, Rank: 89, Factions: Red Hair Pirates
+3: Card: Prime Monkey D Garp, Rank: 100, Factions: Adopted and Honorary, Marines, Monkey family
+4: Card: God Enel, Rank: 75, Factions: Skypiea
+Select the card numbers to attack (separated by space) or 'f' to finish: 1
+Table now: (Winsmoke Sanji, None) | (None, None) | (None, None) | (None, None) | (None, None) | (None, None)        
+Active factions: 19, 12
+
+Player 2's hand:
+1: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+2: Card: Aokiji, Rank: 92, Factions: Marines
+3: Card: Rockstar, Rank: 65, Factions: Red Hair Pirates
+4: Card: Akainu, Rank: 94, Factions: Marines
+Enter 'p' to pass or select the card numbers to defend (separated by space):
+Select the card numbers or 'p': 2
+Table now: (Winsmoke Sanji, Aokiji) | (None, None) | (None, None) | (None, None) | (None, None) | (None, None)      
+Active factions: 19, 12, 6
+Player 1's hand:
+1: Card: Benn Beckman, Rank: 89, Factions: Red Hair Pirates
+2: Card: Prime Monkey D Garp, Rank: 100, Factions: Adopted and Honorary, Marines, Monkey family
+3: Card: God Enel, Rank: 75, Factions: Skypiea
+Select the card numbers to attack (separated by space) or 'f' to finish: 2
+Table now: (Winsmoke Sanji, Aokiji) | (Prime Monkey D Garp, None) | (None, None) | (None, None) | (None, None) | (None, None)
+Active factions: 6
+
+Player 2's hand:
+1: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+2: Card: Rockstar, Rank: 65, Factions: Red Hair Pirates
+3: Card: Akainu, Rank: 94, Factions: Marines
+Enter 'p' to pass or select the card numbers to defend (separated by space):
+Select the card numbers or 'p': p
+Player 2 passes and takes all cards from the table.
+
+Player 1's turn to attack.
+Player 1's hand:
+1: Card: Benn Beckman, Rank: 89, Factions: Red Hair Pirates
+2: Card: God Enel, Rank: 75, Factions: Skypiea
+Select the card numbers to attack (separated by space) or 'f' to finish: 1
+Table now: (Benn Beckman, None) | (None, None) | (None, None) | (None, None) | (None, None) | (None, None)
+Active factions: 10
+
+Player 2's hand:
+1: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+2: Card: Rockstar, Rank: 65, Factions: Red Hair Pirates
+3: Card: Akainu, Rank: 94, Factions: Marines
+4: Card: Winsmoke Sanji, Rank: 82, Factions: Baratie crew, Straw Hat Pirates, Marines
+5: Card: Aokiji, Rank: 92, Factions: Marines
+6: Card: Prime Monkey D Garp, Rank: 100, Factions: Adopted and Honorary, Marines, Monkey family
+Enter 'p' to pass or select the card numbers to defend (separated by space):
+Select the card numbers or 'p': 1
+Вы не можете покрыть этой картой, выберите другую карту или возьмите карты со стола.
+
+Player 2's hand:
+1: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+2: Card: Rockstar, Rank: 65, Factions: Red Hair Pirates
+3: Card: Akainu, Rank: 94, Factions: Marines
+4: Card: Winsmoke Sanji, Rank: 82, Factions: Baratie crew, Straw Hat Pirates, Marines
+5: Card: Aokiji, Rank: 92, Factions: Marines
+6: Card: Prime Monkey D Garp, Rank: 100, Factions: Adopted and Honorary, Marines, Monkey family
+Enter 'p' to pass or select the card numbers to defend (separated by space):
+Select the card numbers or 'p': 5
+Table now: (Benn Beckman, Aokiji) | (None, None) | (None, None) | (None, None) | (None, None) | (None, None)        
+Active factions: 10, 6
+Player 1's hand:
+1: Card: God Enel, Rank: 75, Factions: Skypiea
+Select the card numbers to attack (separated by space) or 'f' to finish: 1
+Card must share at least one faction with active factions on the table.
+Player 1's hand:
+1: Card: God Enel, Rank: 75, Factions: Skypiea
+Select the card numbers to attack (separated by space) or 'f' to finish: f
+
+Player 2's turn to attack.
+Player 2's hand:
+1: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+2: Card: Rockstar, Rank: 65, Factions: Red Hair Pirates
+3: Card: Akainu, Rank: 94, Factions: Marines
+4: Card: Winsmoke Sanji, Rank: 82, Factions: Baratie crew, Straw Hat Pirates, Marines
+5: Card: Prime Monkey D Garp, Rank: 100, Factions: Adopted and Honorary, Marines, Monkey family
+Select the card numbers to attack (separated by space) or 'f' to finish: 3
+Table now: (Akainu, None) | (None, None) | (None, None) | (None, None) | (None, None) | (None, None)
+Active factions: 6
+
+Player 1's hand:
+1: Card: God Enel, Rank: 75, Factions: Skypiea
+Enter 'p' to pass or select the card numbers to defend (separated by space):
+Select the card numbers or 'p': p
+Player 1 passes and takes all cards from the table.
+
+Player 2's turn to attack.
+Player 2's hand:
+1: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+2: Card: Rockstar, Rank: 65, Factions: Red Hair Pirates
+3: Card: Winsmoke Sanji, Rank: 82, Factions: Baratie crew, Straw Hat Pirates, Marines
+4: Card: Prime Monkey D Garp, Rank: 100, Factions: Adopted and Honorary, Marines, Monkey family
+Select the card numbers to attack (separated by space) or 'f' to finish: 3
+Table now: (Winsmoke Sanji, None) | (None, None) | (None, None) | (None, None) | (None, None) | (None, None)        
+Active factions: 19, 12, 6
+
+Player 1's hand:
+1: Card: God Enel, Rank: 75, Factions: Skypiea
+2: Card: Akainu, Rank: 94, Factions: Marines
+Enter 'p' to pass or select the card numbers to defend (separated by space):
+Select the card numbers or 'p': 2
+Table now: (Winsmoke Sanji, Akainu) | (None, None) | (None, None) | (None, None) | (None, None) | (None, None)      
+Active factions: 19, 12, 6
+Player 2's hand:
+1: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+2: Card: Rockstar, Rank: 65, Factions: Red Hair Pirates
+3: Card: Prime Monkey D Garp, Rank: 100, Factions: Adopted and Honorary, Marines, Monkey family
+Select the card numbers to attack (separated by space) or 'f' to finish: 3
+Table now: (Winsmoke Sanji, Akainu) | (Prime Monkey D Garp, None) | (None, None) | (None, None) | (None, None) | (None, None)
+Active factions: 6
+
+Player 1's hand:
+1: Card: God Enel, Rank: 75, Factions: Skypiea
+Enter 'p' to pass or select the card numbers to defend (separated by space):
+Select the card numbers or 'p': 1
+Вы не можете покрыть этой картой, выберите другую карту или возьмите карты со стола.
+
+Player 1's hand:
+1: Card: God Enel, Rank: 75, Factions: Skypiea
+Enter 'p' to pass or select the card numbers to defend (separated by space):
+Select the card numbers or 'p': p
+Player 1 passes and takes all cards from the table.
+
+Player 2's turn to attack.
+Player 2's hand:
+1: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+2: Card: Rockstar, Rank: 65, Factions: Red Hair Pirates
+Select the card numbers to attack (separated by space) or 'f' to finish: 2
+Table now: (Rockstar, None) | (None, None) | (None, None) | (None, None) | (None, None) | (None, None)
+Active factions: 10
+
+Player 1's hand:
+1: Card: God Enel, Rank: 75, Factions: Skypiea
+2: Card: Winsmoke Sanji, Rank: 82, Factions: Baratie crew, Straw Hat Pirates, Marines
+3: Card: Akainu, Rank: 94, Factions: Marines
+4: Card: Prime Monkey D Garp, Rank: 100, Factions: Adopted and Honorary, Marines, Monkey family
+Enter 'p' to pass or select the card numbers to defend (separated by space):
+Select the card numbers or 'p': 1
+Table now: (Rockstar, God Enel) | (None, None) | (None, None) | (None, None) | (None, None) | (None, None)
+Active factions: 17, 10
+Player 2's hand:
+1: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+Select the card numbers to attack (separated by space) or 'f' to finish: f
+
+Player 1's turn to attack.
+Player 1's hand:
+1: Card: Winsmoke Sanji, Rank: 82, Factions: Baratie crew, Straw Hat Pirates, Marines
+2: Card: Akainu, Rank: 94, Factions: Marines
+3: Card: Prime Monkey D Garp, Rank: 100, Factions: Adopted and Honorary, Marines, Monkey family
+Select the card numbers to attack (separated by space) or 'f' to finish: 2
+Table now: (Akainu, None) | (None, None) | (None, None) | (None, None) | (None, None) | (None, None)
+Active factions: 6
+
+Player 2's hand:
+1: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+Enter 'p' to pass or select the card numbers to defend (separated by space):
+Select the card numbers or 'p': p
+Player 2 passes and takes all cards from the table.
+
+Player 1's turn to attack.
+Player 1's hand:
+1: Card: Winsmoke Sanji, Rank: 82, Factions: Baratie crew, Straw Hat Pirates, Marines
+2: Card: Prime Monkey D Garp, Rank: 100, Factions: Adopted and Honorary, Marines, Monkey family
+Select the card numbers to attack (separated by space) or 'f' to finish: 2
+Table now: (Prime Monkey D Garp, None) | (None, None) | (None, None) | (None, None) | (None, None) | (None, None)   
+Active factions: 8, 6, 7
+
+Player 2's hand:
+1: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+2: Card: Akainu, Rank: 94, Factions: Marines
+Enter 'p' to pass or select the card numbers to defend (separated by space):
+Select the card numbers or 'p': p
+Player 2 passes and takes all cards from the table.
+
+Player 1's turn to attack.
+Player 1's hand:
+1: Card: Winsmoke Sanji, Rank: 82, Factions: Baratie crew, Straw Hat Pirates, Marines
+Select the card numbers to attack (separated by space) or 'f' to finish: 1
+Table now: (Winsmoke Sanji, None) | (None, None) | (None, None) | (None, None) | (None, None) | (None, None)        
+Active factions: 19, 12, 6
+
+Player 2's hand:
+1: Card: Killer, Rank: 81, Factions: Kid Pirates, Worst Generation
+2: Card: Akainu, Rank: 94, Factions: Marines
+3: Card: Prime Monkey D Garp, Rank: 100, Factions: Adopted and Honorary, Marines, Monkey family
+Enter 'p' to pass or select the card numbers to defend (separated by space):
+Select the card numbers or 'p': p
+Player 2 passes and takes all cards from the table.
+Player 1 wins!
+Player 1 wins!

@@ -1,6 +1,7 @@
 import random
 from deck import Deck, populate_deck, Card
 from player import Player, deal_cards
+from faction_manager import FactionManager
 
 
 def find_cards_with_shared_factions(deck, card_name):
@@ -64,20 +65,19 @@ def initialize_table():
     return [(None, None) for _ in range(6)]
 
 
-def display_table(table, active_factions):
+def display_table(table, faction_manager):
     """
     Отображает текущее состояние стола в удобочитаемом формате и активные фракции.
-
-    Аргументы:
-    table (list): Стол, представляющий текущие сыгранные карты.
-    active_factions (set): Набор активных фракций.
     """
     table_display = []
     for attack_card, defense_card in table:
         attack_str = attack_card.name_only() if attack_card else "None"
         defense_str = defense_card.name_only() if defense_card else "None"
         table_display.append(f"({attack_str}, {defense_str})")
+    
+    active_factions = faction_manager.get_active_factions()
     active_factions_str = ', '.join(str(faction) for faction in active_factions) if active_factions else 'None'
+    
     print("Table now:", " | ".join(table_display))
     print("Active factions:", active_factions_str)
 
@@ -91,7 +91,7 @@ def play_turn(attacker, defender, table, deck):
     defender (Player): Игрок, который защищается.
     table (list): Стол, представляющий текущие сыгранные карты.
     """
-    active_factions = set()
+    faction_manager = FactionManager()
     print(f"\n{attacker.name}'s turn to attack.")
 
     while True:
@@ -110,7 +110,11 @@ def play_turn(attacker, defender, table, deck):
                 print("You must play at least one card!")
                 continue
 
-        attack_indices = [int(index) - 1 for index in attack_indices]
+        try:
+            attack_indices = [int(index) - 1 for index in attack_indices]
+        except ValueError:
+            print("Invalid input. Please enter numbers separated by spaces.")
+            continue
 
         if any(index < 0 or index >= len(attacker.hand) for index in attack_indices):
             print("Invalid card number(s).")
@@ -118,62 +122,43 @@ def play_turn(attacker, defender, table, deck):
 
         attack_cards = [attacker.hand[index] for index in attack_indices]
 
-        # Проверка на общие фракции между картами и с активными фракциями
-        if len(attack_cards) > 1:
-            common_factions = set.intersection(*(card.faction_ids for card in attack_cards))
-            if not common_factions:
-                print("Invalid card combination - cards must share at least one faction.")
-                continue
-            # Если есть активные фракции, проверяем пересечение с ними
-            if active_factions and not common_factions.intersection(active_factions):
-                print("Cards must share at least one faction with active factions on the table.")
-                continue
-            active_factions = active_factions.intersection(common_factions) if active_factions else common_factions
-        else:
-            # Для одной карты проверяем только соответствие активным фракциям
-            if active_factions and not attack_cards[0].faction_ids.intersection(active_factions):
-                print("Card must share at least one faction with active factions on the table.")
-                continue
-            active_factions = active_factions.intersection(attack_cards[0].faction_ids) if active_factions else attack_cards[0].faction_ids
+        # Проверка валидности комбинации карт через FactionManager
+        if not faction_manager.validate_multiple_cards(attack_cards):
+            print("Invalid card combination - cards must share at least one faction with active factions.")
+            continue
 
-        # Удаление карт из руки атакующего
-        for index in sorted(attack_indices, reverse=True):
-            attacker.hand.pop(index)
-
-        # Определение места для новых пар карт на столе
-        for attack_card in attack_cards:
-            for i in range(len(table)):
-                if table[i] == (None, None):
-                    table[i] = (attack_card, None)
+        # Добавление карт на стол и в FactionManager
+        for i, attack_card in enumerate(attack_cards):
+            for j in range(len(table)):
+                if table[j] == (None, None):
+                    table[j] = (attack_card, None)
+                    faction_manager.add_card_factions(attack_card, j * 2)
+                    attacker.hand.remove(attack_card)
                     break
-            else:
-                print("Table is full, cannot add more cards.")
-                return False  # Возвращаем False, чтобы роли игроков не менялись
 
-        display_table(table, active_factions)
+        display_table(table, faction_manager)
 
+        # Защита
         while True:
-            # Показываем карты в руке защищающегося игрока
             print(f"\n{defender.name}'s hand:")
             for i, card in enumerate(defender.hand):
                 print(f"{i + 1}: {card}")
             print("Enter 'p' to pass or select the card numbers to defend (separated by space):")
 
-            # Выбор карт для защиты или pass
             defense_input = input("Select the card numbers or 'p': ")
             if defense_input.lower() == 'p':
-                # Защищающийся пропускает, забирает карты со стола
-                # Создаем копии карт перед добавлением в руку
+                # Логика пропуска хода
                 cards_to_take = []
                 for pair in table:
                     for card in pair:
                         if card:
                             new_card = Card(card.name, card.rank)
-                            new_card.faction_ids = set(card.faction_ids)  # Создаем новое множество фракций
+                            new_card.faction_ids = set(card.faction_ids)
                             cards_to_take.append(new_card)
                 
                 defender.hand.extend(cards_to_take)
                 table[:] = initialize_table()
+                faction_manager.clear()
                 print(f"{defender.name} passes and takes all cards from the table.")
                 
                 # Проверка на победу
@@ -182,41 +167,46 @@ def play_turn(attacker, defender, table, deck):
                     return True  # Атакующий выигрывает
                 return False  # Возвращаем False, чтобы роли игроков не менялись
             else:
-                defense_indices = [int(index) - 1 for index in defense_input.split()]
+                try:
+                    defense_indices = [int(index) - 1 for index in defense_input.split()]
+                except ValueError:
+                    print("Invalid input. Please enter numbers separated by spaces.")
+                    continue
+
                 if any(index < 0 or index >= len(defender.hand) for index in defense_indices):
                     print("Invalid card number(s).")
                     continue
 
                 defense_cards = [defender.hand[index] for index in defense_indices]
 
-                # Проверка, что каждая карта защиты может покрыть соответствующую карту атаки
-                if len(defense_cards) != len(attack_cards):
+                # Проверка количества карт защиты
+                attack_cards_on_table = [pair[0] for pair in table if pair[0] is not None and pair[1] is None]
+                if len(defense_cards) != len(attack_cards_on_table):
                     print("You must cover all attack cards or take the cards from the table.")
                     continue
 
+                # Проверка рангов и фракций
                 valid_defense = True
-                for attack_card, defense_card in zip(attack_cards, defense_cards):
+                for attack_card, defense_card in zip(attack_cards_on_table, defense_cards):
                     if defense_card.rank <= attack_card.rank:
-                        print("Вы не можете покрыть этой картой, выберите другую карту или возьмите карты со стола.")
+                        print(f"Card {defense_card.name} (rank {defense_card.rank}) cannot cover {attack_card.name} (rank {attack_card.rank})")
                         valid_defense = False
                         break
 
                 if not valid_defense:
                     continue
 
-                # Обновление пар карт на столе
+                # Размещение карт защиты на столе и добавление их фракций
                 for i, defense_card in enumerate(defense_cards):
                     for j in range(len(table)):
-                        if table[j][0] == attack_cards[i] and table[j][1] is None:
-                            table[j] = (attack_cards[i], defense_card)
+                        if table[j][0] is not None and table[j][1] is None:
+                            table[j] = (table[j][0], defense_card)
+                            faction_manager.add_card_factions(defense_card, j * 2 + 1)
                             defender.hand.remove(defense_card)
                             break
 
-                for defense_card in defense_cards:
-                    active_factions.update(defense_card.faction_ids)
-                break  # Выход из цикла после успешного выбора карт для защиты
-
-        display_table(table, active_factions)
+                display_table(table, faction_manager)
+                break  # Выход из цикла защиты после успешного хода
 
     # Перемещение карт со стола в стопку сброса
     for attack_card, defense_card in table:
@@ -224,8 +214,8 @@ def play_turn(attacker, defender, table, deck):
             deck.add_to_discard_pile(attack_card)
         if defense_card:
             deck.add_to_discard_pile(defense_card)
-    table[:] = initialize_table()  # Очистка стола
-    active_factions.clear()  # Сброс активных фракций
+    table[:] = initialize_table()
+    faction_manager.clear()
 
     # Проверка на победу после успешной защиты
     if not attacker.hand:
@@ -239,11 +229,13 @@ def play_turn(attacker, defender, table, deck):
 
 
 def main():
-    # Создаем колоду
+    # Создаем колоду и менеджер фракций
     deck = Deck()
+    faction_manager = FactionManager()
 
     # Заполняем колоду картами
     populate_deck(deck)
+
 
     # Перемешиваем колоду
     random.shuffle(deck.cards)
@@ -272,15 +264,16 @@ def main():
     # Игровой цикл
     while True:
         turn_result = play_turn(first_player, second_player, table, deck)
-        if turn_result:
-            # Проверка на победу после каждого хода
-            if not first_player.hand:
-                print(f"{first_player.name} wins!")
-                break
-            if not second_player.hand:
-                print(f"{second_player.name} wins!")
-                break
+        
+        # Проверка на победу после каждого хода
+        if not first_player.hand:
+            print(f"{first_player.name} wins!")
+            break
+        if not second_player.hand:
+            print(f"{second_player.name} wins!")
+            break
 
+        if turn_result:
             # Смена ролей атакующего и защищающегося
             first_player, second_player = second_player, first_player
 

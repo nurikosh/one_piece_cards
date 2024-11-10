@@ -33,9 +33,8 @@ class Card:
     def name_only(self):
         """Display only the name of the card, for use on the table."""
         return self.name
-
-    def get_active_factions(self, active_factions):
-        """Determine active factions based on the current active factions."""
-        if not active_factions:
-            return self.faction_ids  # All factions of the first card are active.
-        return self.faction_ids.intersection(active_factions)
+    # def get_active_factions(self, active_factions):
+    #     """Determine active factions based on the current active factions."""
+    #     if not active_factions:
+    #         return self.faction_ids
+    #     return self.faction_ids.intersection(active_factions)
