@@ -1,5 +1,5 @@
 import random
-from deck import Deck, populate_deck
+from deck import Deck, populate_deck, Card
 from player import Player, deal_cards
 
 
@@ -101,10 +101,9 @@ def play_turn(attacker, defender, table, deck):
             print(f"{i + 1}: {card}")
 
         # Выбор карт для атаки
-        attack_indices = input("Select the card numbers to attack (separated by space) or 'f' to finish(if not your 1 turn): ").split()
+        attack_indices = input("Select the card numbers to attack (separated by space) or 'f' to finish: ").split()
         
         if 'f' in attack_indices:
-            # Проверяем, есть ли карты на столе
             if any(pair[0] is not None for pair in table):
                 break  # Завершаем ход только если есть хотя бы одна карта на столе
             else:
@@ -119,15 +118,23 @@ def play_turn(attacker, defender, table, deck):
 
         attack_cards = [attacker.hand[index] for index in attack_indices]
 
-        # Проверка на общие фракции
+        # Проверка на общие фракции между картами и с активными фракциями
         if len(attack_cards) > 1:
             common_factions = set.intersection(*(card.faction_ids for card in attack_cards))
             if not common_factions:
-                print("Invalid card combination.")
+                print("Invalid card combination - cards must share at least one faction.")
                 continue
-            active_factions = common_factions
+            # Если есть активные фракции, проверяем пересечение с ними
+            if active_factions and not common_factions.intersection(active_factions):
+                print("Cards must share at least one faction with active factions on the table.")
+                continue
+            active_factions = active_factions.intersection(common_factions) if active_factions else common_factions
         else:
-            active_factions = attack_cards[0].faction_ids
+            # Для одной карты проверяем только соответствие активным фракциям
+            if active_factions and not attack_cards[0].faction_ids.intersection(active_factions):
+                print("Card must share at least one faction with active factions on the table.")
+                continue
+            active_factions = active_factions.intersection(attack_cards[0].faction_ids) if active_factions else attack_cards[0].faction_ids
 
         # Удаление карт из руки атакующего
         for index in sorted(attack_indices, reverse=True):
@@ -156,8 +163,17 @@ def play_turn(attacker, defender, table, deck):
             defense_input = input("Select the card numbers or 'p': ")
             if defense_input.lower() == 'p':
                 # Защищающийся пропускает, забирает карты со стола
-                defender.hand.extend([card for pair in table for card in pair if card])
-                table[:] = initialize_table()  # Очистка стола
+                # Создаем копии карт перед добавлением в руку
+                cards_to_take = []
+                for pair in table:
+                    for card in pair:
+                        if card:
+                            new_card = Card(card.name, card.rank)
+                            new_card.faction_ids = set(card.faction_ids)  # Создаем новое множество фракций
+                            cards_to_take.append(new_card)
+                
+                defender.hand.extend(cards_to_take)
+                table[:] = initialize_table()
                 print(f"{defender.name} passes and takes all cards from the table.")
                 
                 # Проверка на победу

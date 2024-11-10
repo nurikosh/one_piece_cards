@@ -24,5 +24,6 @@ FACTIONS = {
     20: "Black Cat Pirates",
     21: "Giants",
     22: "Arlong's Pirates",
-    23: "Baratie Arc"
+    23: "Baratie Arc",
+    24: "Blackbeard's Pirates"
 }
